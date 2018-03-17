@@ -12,14 +12,19 @@ function log(message) {
 if (process.connected) {
 	isChild = true;
 
-	process.on('disconnect', ()=> {
-		log(`Disconnected from Parent`);
+	process.on('', () => {
+
 	});
 
-	process.on('message', (message, sendHandle)=> {
+	process.on('disconnect', ()=> {
+		log(`Disconnected from Parent`);
+		process.exit();
+	});
+
+	process.on('message', (message)=> {
 		log(`Received from Parent: ${message}`);
 		log('Echoing to Parent');
-		sendHandle.send(message);
+		process.send(message);
 	});
 }
 
