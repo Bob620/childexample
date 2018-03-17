@@ -2,7 +2,11 @@ const pid = process.pid;
 let isChild = false;
 
 function log(message) {
-	console.log(`[${isChild ? 'Child' : 'Self'} - ${pid}] ${message}`);
+	if (isChild) {
+		process.send(`[Child - ${pid}] ${message}`);
+	} else {
+		console.log(`[Self - ${pid}] ${message}`);
+	}
 }
 
 if (process.connected) {
@@ -30,7 +34,7 @@ let isClosing = false;
 function exitHandler(options) {
 	if (!isClosing) {
 		isClosing = true;
-		console.log("Shutting down...");
+		log("Shutting down...");
 
 		if (options.exit)
 			process.exit();
