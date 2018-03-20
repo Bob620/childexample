@@ -12,10 +12,6 @@ function log(message) {
 if (process.connected) {
 	isChild = true;
 
-	process.on('', () => {
-
-	});
-
 	process.on('disconnect', ()=> {
 		log(`Disconnected from Parent`);
 		process.exit();
